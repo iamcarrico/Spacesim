@@ -21,9 +21,5 @@ require_once('inc/ez_sql_mysql.php');
 //Game Settings
 define('GAME_NAME', 'Space Sim');
 
-//Debugger function
-function console($msg) {
-	echo '<script type="text/javascript">';
-	echo "console.log(\"". $msg ."\");";
-	echo '</script>';
-}
+//Functions that aren't dependent on data from the DB being available
+require_once('commonfunctions.php');

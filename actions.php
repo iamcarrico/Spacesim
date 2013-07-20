@@ -1,10 +1,8 @@
 <?php 
 
 require_once('functions.php');
-//include('data.php');
 
 //Action GET handler 
-
 if (isset($_GET['action'])) {
 
 //DB object we're going to use for this	
@@ -45,7 +43,7 @@ $db = new ezSQL_mysql(DB_USER, DB_PASS, DB_NAME, DB_HOST);
 		
 		elseif (transitCheck($player->eta)) {
 			echo "Error: Superluminal velocities detected. Estimated time of arrival: ";
-			 transitTime(date('r',$player->eta));
+			transitTime(date('r', $player->eta));
 		}
 		
 		else {
@@ -158,6 +156,12 @@ $db = new ezSQL_mysql(DB_USER, DB_PASS, DB_NAME, DB_HOST);
     	if ($db->query($sql)) {
     	    echo "Changed government";
     	}   
+    }
+      
+    if (($_GET['action'] == 'buyShip') && ($player->landed == 1)) {
+	    if ($player->credits > $ships[$_GET['id'] - 1]->cost) {
+		    echo "You've got yourself a new ship!";
+	    }
     }
       
     else {

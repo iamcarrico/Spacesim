@@ -23,7 +23,7 @@ function load_player($user) {
 
 function load_pilots($system, $player) {
 	global $db;
-	$sql = "SELECT * 
+	$sql = "SELECT id, name, government, vessel, ship 
 	FROM ".TBL_PREFIX."user 
 	WHERE location_syst = $system 
 	AND id != $player";
@@ -36,6 +36,13 @@ function load_spobs($syst) {
 	$sql = "SELECT * FROM ".TBL_PREFIX."spob";//debug_msg($sql);
 	$spobs = $db->get_results($sql);
 	return $spobs;
+}
+
+function loadShips() {
+	global $db;
+	$sql = "SELECT * FROM ".TBL_PREFIX."ships";//debug_msg($sql);
+	$ships = $db->get_results($sql);
+	return $ships;
 }
 
 /*
@@ -83,13 +90,10 @@ else {
 	$systems = load_systems();
 	$governments = load_govts();
 	$spobs = load_spobs($player->location_syst);
-	//$spob = load_spob($player->location_spob);
 	$jumps = load_connections($player->location_syst);
 	$pilots = load_pilots($player->location_syst, $player->id);
 	$options = loadOptions();
+	$ships = loadShips();
 	$fuelprice = $options[1]->value;
 	$maxFuel = maxFuel();
-	//$fuelprice = getFuelPrice();
-	//x$news = load_news();
-	//echo "data loaded at ". date('r');
 } ?>

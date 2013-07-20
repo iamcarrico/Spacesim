@@ -28,6 +28,11 @@ require_once('functions.php');
 		
 		//echo "You literally just <span class='msg'></span>";
 	
+		echo "You are piloting a ".$ships[$player->ship - 1]-> name.", the <em>".$governments[$player->government - 1]->isoname." ".$player->vessel."</em>";
+		
+		if ($player->landed == 1) {
+			echo "<a href='#' onclick='shipyard()'> Shipyard</a>";
+		}
 ?>
 
 </div>
@@ -77,7 +82,8 @@ if (!isLanded() && (!transitCheck())) {
 			//print_r($governments);
 			foreach ($pilots as $pilot) {
 				if (($player->name != $pilot->name) && ($pilot->landed == 0)) {
-					echo "<li style='color: ".$governments[$pilot->government - 1]->color."' title='Affiliated with ".$governments[$pilot->government - 1]->name."'>".$pilot->name."</li>";
+					echo "<li style='color: ".$governments[$pilot->government - 1]->color."' title='Affiliated with ".$governments[$pilot->government - 1]->name."'>".$pilot->name.",
+					piloting a ".$ships[$pilot->ship - 1]->name.", the <em>".$governments[$pilot->government - 1]->isoname." ".$pilot->vessel."</em></li>";
 				}
 			}
 
@@ -163,3 +169,6 @@ $(document).ready(function() {
 </script>
 -->
 	</table>
+	<?php if (isLoggedIn()){ ?>
+<a href='#' class="reset" onClick="reSidebar()">Reload sidebar</a>
+<?php } ?>
