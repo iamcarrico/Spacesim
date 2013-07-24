@@ -20,7 +20,7 @@ require_once('inc/ez_sql_mysql.php');
 
 //Game Settings
 define('GAME_NAME', 'Space Sim');
-define('VERSION', 'dev-1.1');
+define('VERSION', 'dev-1.2');
 
 //Functions that aren't dependent on data from the DB being available
-require_once('commonFunctions.php');
+require_once('commonfunctions.php');
