@@ -6,7 +6,7 @@ require_once('config.php');
 
 //require_once('actions.php');
 
-include('data.php');
+require('data.php');
 
 function isAdmin($player) {
 	$db = new ezSQL_mysql(DB_USER, DB_PASS, DB_NAME, DB_HOST);

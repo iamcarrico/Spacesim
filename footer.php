@@ -1,8 +1,36 @@
+<?php if (isLoggedIn()){ ?>
+<a href='#' class="reset" onClick="loadContent('navigation'); reSidebar()">Reload sidebar</a>
+<?php } ?>
+
+<!-- <div class="msg"></div> -->
+
 </body>
 <script>
+
+function starField() {
+	function getRandomArbitrary(min, max) {
+		return Math.random() * (max - min) + min;
+	}
+	var i = 0;
+	
+	while (i <= 20) {
+	$(".jumpScreen").append("<div class='starline'></div>");
+	var top = Math.random() * (95 - 5) + 5;
+	$(".starline").css("top", top +"%");
+	console.log(i);
+	i++;
+	}
+}
+
 function shipyard() {
 	$('.content').load("shipyard.php").fadeIn();
 }
+
+function loadContent(page) {
+	$('.content').empty();
+	$('.content').load(page + ".php").fadeIn();
+}
+
 
 function clearScreen() {
 	$('.content').empty();
@@ -22,8 +50,9 @@ function deathScreen() {
 	$('.deathScreen h1').text('Goodbye').fadeIn(500);
 	});
 	window.setTimeout(function() {
-		$('.sidebar').load("sidebar.php");
 		$('.deathScreen').fadeOut(2000);
+		reSidebar();
+		loadContent('navigation');
 	}, 7000);
 }
 
@@ -31,10 +60,11 @@ function jumpScreen(time) {
 		$('.content').empty();
 		$('.sidebar').empty();
 		$('.jumpScreen').fadeIn(2000);
-		
+		starField();
 		window.setTimeout(function() {
-		reSidebar();
 		$('.jumpScreen').fadeOut(2000);
+		reSidebar();
+		loadContent('navigation');
 	}, time);
 }
 
@@ -69,6 +99,7 @@ function buyShip(id) {
 		data: {action: "buyShip", shipid: id}
 	}).done(function(msg) {
 		reSidebar();
+		loadContent('shipyard');
 		console.log(msg);
 	})
 }
@@ -80,6 +111,7 @@ function landLink(destination) {
 		data: {action: "land", destination: destination}
 	}).done(function(msg) {
 		reSidebar();
+		loadContent('navigation');
 		console.log(msg);
 	})
 }
@@ -91,6 +123,7 @@ function reFuel() {
 		data: {action: "refuel"}
 	}).done(function(msg) {
 		reSidebar();
+		loadContent('navigation');
 		console.log(msg);
 		$(".msg").text(msg);
 	})
@@ -114,10 +147,18 @@ function liftOff() {
 		url: "actions.php",
 		data: {action: "lift"}
 	}).done(function(msg) {
-		clearScreen();
 		reSidebar();
+		loadContent('navigation');
 		console.log(msg);
 	})
+}
+
+function errorBox(msg) {
+	$('.errorBox').text(msg);
+	$('.errorBox').fadeIn(500);
+	window.setTimeout(function() {
+		$('.errorBox').fadeOut(500);
+	}, 2000);
 }
 
 </script>

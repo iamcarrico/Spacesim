@@ -45,14 +45,13 @@ function loadShips() {
 	return $ships;
 }
 
-/*
-function load_spob($user) {
+function load_spob($player) {
 	global $db;
-	$sql = "SELECT * FROM ".TBL_PREFIX."spob WHERE parent = $user";//debug_msg($sql);
+	$sql = "SELECT * FROM ".TBL_PREFIX."spob WHERE ID = $player";//debug_msg($sql);
 	$spob = $db->get_row($sql);
 	return $spob;
 }
-*/	
+	
 
 function load_connections($syst) {
 	global $db;
@@ -95,5 +94,4 @@ else {
 	$options = loadOptions();
 	$ships = loadShips();
 	$fuelprice = $options[1]->value;
-	$maxFuel = maxFuel();
 } ?>

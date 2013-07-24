@@ -1,5 +1,4 @@
 <?php
-
 function isLoggedIn() {
 	if (isset($_SESSION['playerid'])) {
 	    return true;
@@ -24,6 +23,7 @@ function landVerb($type, $tense = "present") {
 				break;
 			
 			case 1:
+			case 3:
 				return "dock";
 				break;
 			}
@@ -36,6 +36,7 @@ function landVerb($type, $tense = "present") {
 				break;
 			
 			case 1:
+			case 3:
 				return "docked at";
 				break;
 			}
@@ -55,6 +56,11 @@ function spobTitle($type) {
 		case 2:
 			return "Moon ";
 			break;
+		
+		case 3:
+		return " ";
+		break;
+		//spobs that don't need a title
 	}
 }
 
@@ -62,6 +68,7 @@ function spobTitle($type) {
 function console($msg) {
 	echo '<script type="text/javascript">';
 	echo "console.log(\"". $msg ."\");";
+	//echo "$(\".msg\").text(\"". $msg ."\");";
 	echo '</script>';
 }
 

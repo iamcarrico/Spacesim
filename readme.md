@@ -14,4 +14,7 @@ Good luck. Should be easy though: import the included sql file and update config
 
 #Testing
 A testing account is included in the .sql file.
-The username is testing the password is testing. Imaginative, I know.
+The username is "testing" and the password is "testing"
+
+#Caveats
+This code is in no way secure and should be treated as such.

@@ -116,12 +116,12 @@ $db = new ezSQL_mysql(DB_USER, DB_PASS, DB_NAME, DB_HOST);
     if ($_GET['action'] == 'refuel') {
 		
 		
-		$cost = $fuelprice * ($maxFuel - $player->fuel);
+		$cost = $fuelprice * ($ships[$player->ship - 1]-> fueltank - $player->fuel);
 		if ($player->credits < $cost) {
 			echo "Unable to refuel. Not enough credits.";
 		}
 		else {
-			$sql = "UPDATE ".TBL_PREFIX."user SET fuel=$maxFuel, credits=credits-$cost WHERE ID=$player->id";
+			$sql = "UPDATE ".TBL_PREFIX."user SET fuel=".$ships[$player->ship - 1]-> fueltank.", credits=credits-$cost WHERE ID=$player->id";
 			if ($db->query($sql)) {
 	    	   	 //header("Location: index.php");
 			   	 echo "Refueled! It cost you $cost credits!";
@@ -141,7 +141,7 @@ $db = new ezSQL_mysql(DB_USER, DB_PASS, DB_NAME, DB_HOST);
     //Self destruct
     if ($_GET['action'] == 'selfdestruct') {
 
-		$sql = "UPDATE ".TBL_PREFIX."user SET fuel=$maxFuel, location_syst=1, location_spob=1, landed=1, eta=NULL WHERE ID=$player->id";
+		$sql = "UPDATE ".TBL_PREFIX."user SET fuel=". $ships['0']->fueltank .", location_syst=1, location_spob=1, landed=1, eta=NULL WHERE ID=$player->id";
 		
 		if ($db->query($sql)) {
     	    //header("Location: index.php");
@@ -170,16 +170,18 @@ $db = new ezSQL_mysql(DB_USER, DB_PASS, DB_NAME, DB_HOST);
 	    if ($credits > $cost) {
 		    
 	    $sql = "UPDATE ".TBL_PREFIX."user SET credits=credits-$cost, ship=$ship, fuel=$fuel WHERE ID=".$player->id."";
-		
-			if ($db->query($sql)) {
-    		    //header("Location: index.php");
-				echo "You've got yourself a new ship!";
-			    echo "You've got".$player->credits - $cost." credits left.";
-    		}
-    		elseif ($player->ship == $ship) {
+			
+			if ($player->ship == $ship) {
 	    		echo "Unable to purchase a ship you already own!";
 	    		
     		}
+			
+			elseif ($db->query($sql)) {
+    		    //header("Location: index.php");
+				echo "You've got yourself a new ship!";
+			    echo "You've got ".($player->credits - $cost)." credits left.";
+    		}
+    		
     		else {
 	    		echo "Unable to puchase ship!";
     		}
