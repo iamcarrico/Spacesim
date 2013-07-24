@@ -1,9 +1,10 @@
 <?php
 
 session_start();
+
 require_once('config.php');
 
-require_once('actions.php');
+//require_once('actions.php');
 
 include('data.php');
 
@@ -22,11 +23,27 @@ function transitCheck(){
 	//console($player->eta."vs". time());
 	if ($player->eta < time()) {
 		return false;
+		$db = new ezSQL_mysql(DB_USER, DB_PASS, DB_NAME, DB_HOST);
+		$db->query("UPDATE ".TBL_PREFIX."users jumping = 0, attackable = 1 WHRE ID = $player->id");
 	}
 	else {
 		return true;
 	}
 }
+
+function jumping(){
+	global $player;
+	//console($player->eta."vs". time());
+	if ($player->eta < time()) {
+		return false;
+		$db = new ezSQL_mysql(DB_USER, DB_PASS, DB_NAME, DB_HOST);
+		$db->query("UPDATE ".TBL_PREFIX."users jumping=0, attackable=1 WHRE ID = $player->id");
+	}
+	else {
+		return true;
+	}
+}
+
 
 function transitTime() {
 	global $player;

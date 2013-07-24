@@ -11,3 +11,5 @@ foreach ($ships as $ship) {
 	echo "<strong>Price</strong> $ship->cost";
 	echo "<strong><a href='#' onclick='buyShip($ship->id)'>Buy</a></strong>";
 }
+
+//print_r($ships);

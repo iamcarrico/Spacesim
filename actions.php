@@ -85,24 +85,25 @@ $db = new ezSQL_mysql(DB_USER, DB_PASS, DB_NAME, DB_HOST);
     	//Success!
     	else {
     		
-	    	$neweta = time() + (1 * floor(rand(4,7)));
+	    	$neweta = time() + (1 * floor(rand(20,30)));
 	    	//echo date('r', $neweta);
 			
 			//console($eta);
 			
 			$destination = $_GET['destination'];
 			
-    		$sql = "UPDATE ".TBL_PREFIX."user SET location_syst=$destination, fuel=fuel-1, eta=$neweta WHERE ID=$player->id";
+    		$sql = "UPDATE ".TBL_PREFIX."user SET location_syst=$destination, fuel=fuel-1, eta=$neweta, jumping=1, attackable = 0 WHERE ID=$player->id";
     		
     		//console($sql);
     		
     		if ($db->query($sql)) {
     		    //header("Location: index.php");
     		    //console("Jumped!");
-    		    echo "Jumped!\n\r";
-    		    echo $neweta."\n\r";
-    		    echo time()."\n\r";
-    		    echo $neweta - time()."\n\r";
+    		    echo ($neweta - time()) * 1000;
+    		    ?>
+
+<?php
+    		 
     		}
     		else {
     		    echo "Unable to jump!";
@@ -137,7 +138,7 @@ $db = new ezSQL_mysql(DB_USER, DB_PASS, DB_NAME, DB_HOST);
 		
     }
     
-    //Self destruction
+    //Self destruct
     if ($_GET['action'] == 'selfdestruct') {
 
 		$sql = "UPDATE ".TBL_PREFIX."user SET fuel=$maxFuel, location_syst=1, location_spob=1, landed=1, eta=NULL WHERE ID=$player->id";
@@ -157,10 +158,31 @@ $db = new ezSQL_mysql(DB_USER, DB_PASS, DB_NAME, DB_HOST);
     	    echo "Changed government";
     	}   
     }
-      
+    
+    //Buy a ship  
     if (($_GET['action'] == 'buyShip') && ($player->landed == 1)) {
-	    if ($player->credits > $ships[$_GET['id'] - 1]->cost) {
-		    echo "You've got yourself a new ship!";
+    
+    	$credits = $player->credits;
+    	$cost = $ships[$_GET['shipid'] - 1]->cost;
+    	$ship = $ships[$_GET['shipid'] - 1]->id;
+    	$fuel = $ships[$_GET['shipid'] - 1]->fueltank;
+		//print_r($player);
+	    if ($credits > $cost) {
+		    
+	    $sql = "UPDATE ".TBL_PREFIX."user SET credits=credits-$cost, ship=$ship, fuel=$fuel WHERE ID=".$player->id."";
+		
+			if ($db->query($sql)) {
+    		    //header("Location: index.php");
+				echo "You've got yourself a new ship!";
+			    echo "You've got".$player->credits - $cost." credits left.";
+    		}
+    		elseif ($player->ship == $ship) {
+	    		echo "Unable to purchase a ship you already own!";
+	    		
+    		}
+    		else {
+	    		echo "Unable to puchase ship!";
+    		}
 	    }
     }
       

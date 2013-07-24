@@ -161,13 +161,6 @@ if (!isLanded() && (!transitCheck())) {
 		}
 	
 	?>
-<!--
-<script type="text/javascript">
-$(document).ready(function() {
-	$('.jumpeta').countdown({until: <?php echo $player->jumpeta - time(); ?>, compact: true, format: 'YOWDHMS', onExpiry: reSidebar});
-});
-</script>
--->
 	</table>
 	<?php if (isLoggedIn()){ ?>
 <a href='#' class="reset" onClick="reSidebar()">Reload sidebar</a>

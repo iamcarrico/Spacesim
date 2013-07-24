@@ -29,13 +29,34 @@ require_once('functions.php');
 	width: 50%;
 	float: left;
 }
+
+.deathScreen {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	background: black;
+	color: white;
+	display: none;
+	text-align: center;
+}
+
+.jumpScreen {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	background: blue;
+	color: white;
+	display: none;
+	text-align: center;
+}
 </style>
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
-
-
 
 </head>
 <body>
@@ -62,7 +83,7 @@ if ((isset($_POST['user'])) && (isset($_POST['user']))) {
 			console("Player ID: ".$_SESSION['playerid']);?>
 			<script type="text/javascript">
 				$(document).ready(function() {
-					$('.sidebar').load("sidebar.php");
+					reSidebar();
 				});
 			</script> 
 			<?php
